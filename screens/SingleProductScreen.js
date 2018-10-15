@@ -17,7 +17,8 @@ export default class SingleProductScreen extends React.Component {
                 id: product.id,
                 image: product.images[0].src,
                 name: product.name,
-                quantity: 1
+                price: product.price,
+                quantity: 1,
             }
         }
     }
