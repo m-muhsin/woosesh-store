@@ -1,5 +1,5 @@
 import React from 'react';
-import { ScrollView, StyleSheet, Text, View, FlatList, TouchableHighlight, Image } from 'react-native';
+import { ScrollView, StyleSheet, Text, View, FlatList, TouchableOpacity, Image } from 'react-native';
 import axios from 'axios';
 
 import WooApi from '../constants/Api';
@@ -15,7 +15,6 @@ export default class ProductsScreen extends React.Component {
 
   fetProducts = () => {
     const url = `${WooApi.url.wc}products?per_page=20&consumer_key=${WooApi.keys.consumerKey}&consumer_secret=${WooApi.keys.consumerSecret}`;
-    console.log('url',url)
     axios.get(url)
     .then(response => this.setState({ products: response.data }))
     .catch(error => console.log('error',error));
@@ -26,7 +25,7 @@ export default class ProductsScreen extends React.Component {
   }
 
   renderItem = ({item}) => (
-    <TouchableHighlight 
+    <TouchableOpacity 
       style={styles.listItem} 
       onPress={() => this.props.navigation.navigate("SingleProduct", { product: item })}
     >
@@ -34,7 +33,7 @@ export default class ProductsScreen extends React.Component {
         <Image style={styles.image} source={{ uri: item.images[0].src }} />
         <Text style={styles.text}>{item.name}</Text>
       </View>
-    </TouchableHighlight>
+    </TouchableOpacity>
   )
 
   render() {
@@ -46,7 +45,7 @@ export default class ProductsScreen extends React.Component {
             contentContainerStyle={styles.list} 
             numColumns={2}
             data={this.state.products}
-            keyExtractor={ item => item.id }
+            keyExtractor={ item => item.id.toString() }
             renderItem={this.renderItem}
           />
           :

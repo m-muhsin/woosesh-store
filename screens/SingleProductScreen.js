@@ -2,58 +2,94 @@ import React from "react";
 import { StyleSheet, Text, View, ScrollView, Image, TextInput, TouchableOpacity } from "react-native";
 import HTMLView from 'react-native-htmlview';
 
+import { CartContext } from '../context/CartContext';
+
 export default class SingleProductScreen extends React.Component {
     static navigationOptions = ({ navigation }) => ({
         title: navigation.state.params.product.name
     });
 
-    state = {
-        quantity: 1
+    constructor(props) {
+        super(props);
+        const product = props.navigation.state.params.product;
+        this.state = {
+            currentItem: {
+                id: product.id,
+                image: product.images[0].src,
+                name: product.name,
+                quantity: 1
+            }
+        }
     }
 
     decreaseQuantity = () => {
-        if(this.state.quantity <= 1) {
+        if(this.state.currentItem.quantity <= 1) {
             return;
         } else {
-            this.setState({
-                quantity: this.state.quantity - 1
+            this.setState(state => {
+                return {
+                    currentItem: {
+                        ...state.currentItem,
+                        quantity: state.currentItem.quantity - 1
+                    }
+                }
             });
         }
     }
 
     increaseQuantitiy = () => {
-        this.setState({
-            quantity: Number(this.state.quantity) + 1
+        this.setState(state => {
+            return {
+                currentItem: {
+                    ...state.currentItem,
+                    quantity: state.currentItem.quantity + 1
+                }
+            }
+        });
+    }
+
+    changeQuantity(quantity) {
+        this.setState(state => {
+            return {
+                currentItem: {
+                    ...state.currentItem,
+                    quantity: Number(quantity)
+                }
+            }
         });
     }
 
     render() {
         const product = this.props.navigation.state.params.product;
         return (
-            <ScrollView>
-                <Image style={styles.image} source={{ uri: product.images[0].src }} />
-                <Text style={styles.text}>{product.name}     $ {product.price}</Text>
-                <View style={{ display: 'flex', flexDirection: 'row', padding: 10, marginLeft: 20, marginBottom: 20 }}>
-                    <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center' }}>
-                        <TouchableOpacity style={styles.decreaseButton} onPress={this.decreaseQuantity}>
-                            <Text> - </Text>
-                        </TouchableOpacity>
-                        <TextInput
-                            style={styles.input}
-                            onChangeText={(quantity) => this.setState({ quantity })}
-                            value={`${this.state.quantity}`}
-                            keyboardType="numeric"
-                        />
-                        <TouchableOpacity style={styles.increaseButton} onPress={this.increaseQuantitiy} >
-                            <Text> + </Text>
+            <CartContext.Consumer>
+            {cart => ( 
+                <ScrollView>
+                    <Image style={styles.image} source={{ uri: product.images[0].src }} />
+                    <Text style={styles.text}>{product.name}     $ {product.price}</Text>
+                    <View style={{ display: 'flex', flexDirection: 'row', padding: 10, marginLeft: 20, marginBottom: 20 }}>
+                        <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center' }}>
+                            <TouchableOpacity style={styles.decreaseButton} onPress={this.decreaseQuantity}>
+                                <Text> - </Text>
+                            </TouchableOpacity>
+                            <TextInput
+                                style={styles.input}
+                                onChangeText={(quantity) => this.changeQuantity(quantity)}
+                                value={`${this.state.currentItem.quantity}`}
+                                keyboardType="numeric"
+                                />
+                            <TouchableOpacity style={styles.increaseButton} onPress={this.increaseQuantitiy} >
+                                <Text> + </Text>
+                            </TouchableOpacity>
+                        </View>
+                        <TouchableOpacity style={styles.button} onPress={() => cart.addItem(this.state.currentItem) } >
+                            <Text style={{ color: '#fff' }}> ADD TO CART </Text>
                         </TouchableOpacity>
                     </View>
-                    <TouchableOpacity style={styles.button}>
-                        <Text style={{ color: '#fff' }}> ADD TO CART </Text>
-                    </TouchableOpacity>
-                </View>
-                <HTMLView style={styles.html} value={product.description} />
-            </ScrollView>
+                    <HTMLView style={styles.html} value={product.description} />
+                </ScrollView>
+            )}
+            </CartContext.Consumer>
         );
     }
 }

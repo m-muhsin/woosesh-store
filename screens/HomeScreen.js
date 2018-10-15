@@ -36,13 +36,13 @@ export default class HomeScreen extends React.Component {
             style={{ marginBottom: 10 }}
           >
             <Image
-              source={{ uri: 'https://woocommerce-store.on-its-way.com/wp-content/uploads/2018/02/sunglasses-768x768.jpg' }} style={styles.sliderImage}
+              source={{ uri: 'https://woocommerce-store.on-its-way.com/wp-content/uploads/2018/02/polo-768x767.jpg' }} style={styles.sliderImage}
             />
             <Image
               source={{ uri: 'https://woocommerce-store.on-its-way.com/wp-content/uploads/2018/02/cap-768x768.jpg' }} style={styles.sliderImage}
             />
             <Image
-              source={{ uri: 'https://woocommerce-store.on-its-way.com/wp-content/uploads/2018/02/polo-768x767.jpg' }} style={styles.sliderImage}
+              source={{ uri: 'https://woocommerce-store.on-its-way.com/wp-content/uploads/2018/02/sunglasses-768x768.jpg' }} style={styles.sliderImage}
             />
           </ScrollView>
           <Button color="#05a5d1" title="SHOP" onPress={() => this.props.navigation.navigate("Products")} />
