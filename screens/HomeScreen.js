@@ -20,7 +20,7 @@ export default class HomeScreen extends React.Component {
           <View style={styles.welcomeContainer}>
             <Image
               source={
-                require('../assets/images/woosesh-logo.jpg')
+                require('../assets/images/woosesh-logo.png')
               }
               style={styles.welcomeImage}
             />

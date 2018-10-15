@@ -80,7 +80,7 @@ export default class App extends React.Component {
   _loadResourcesAsync = async () => {
     return Promise.all([
       Asset.loadAsync([
-        require('./assets/images/woosesh-logo.jpg'),
+        require('./assets/images/woosesh-logo.png'),
       ]),
     ]);
   };
