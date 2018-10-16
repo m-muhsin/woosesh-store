@@ -67,9 +67,9 @@ export default class SingleProductScreen extends React.Component {
             {cart => ( 
                 <ScrollView>
                     <Image style={styles.image} source={{ uri: product.images[0].src }} />
-                    <Text style={styles.text}>{product.name}     $ {product.price}</Text>
-                    <View style={{ display: 'flex', flexDirection: 'row', padding: 10, marginLeft: 20, marginBottom: 20 }}>
-                        <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center' }}>
+                    <Text style={styles.text}>{product.name}     ${product.price}</Text>
+                    <View style={styles.quantityCart}>
+                        <View style={styles.quantity}>
                             <TouchableOpacity style={styles.decreaseButton} onPress={this.decreaseQuantity}>
                                 <Text> - </Text>
                             </TouchableOpacity>
@@ -104,8 +104,19 @@ const styles = StyleSheet.create({
     text: {
         fontSize: 20,
         paddingLeft: 20,
-        paddingBottom: 20,
-        textAlign: 'center'
+        paddingTop: 10,
+        paddingBottom: 10,
+        textAlign: 'center',
+    },
+    quantityCart: {
+        flexDirection: 'row', 
+        padding: 10, 
+        marginLeft: 20,
+        marginBottom: 20,
+    },
+    quantity: {
+        flexDirection: 'row', 
+        justifyContent: 'center'
     },
     input: {
         height: 40,

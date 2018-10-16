@@ -92,7 +92,5 @@ const styles = StyleSheet.create({
   loaderImage: {
     width: 200,
     height: 200,
-    alignItems: 'center',
-    justifyContent: 'center',
   },
 });
